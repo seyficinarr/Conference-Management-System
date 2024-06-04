@@ -1,0 +1,19 @@
+Conference:
+conferenceId(PK), paperId(FK), userId(FK)(organizer), title, description, startDate, endDate, location, venue
+Session:
+sessionId(PK), conferenceId(FK), description, title, startDate, endDate
+User:
+userId(PK), firstName, lastName, email, phone, role
+Municipality:
+municipalityId(PK), municipalityName, city, status, phone, email
+Paper:
+paperId(PK), authorId(FK, author), content, title, conferenceId(FK)
+Review:
+reviewId(PK), conferenceId(FK), reviewerId(FK, reviewer), feedback, status
+System Admin:
+adminId(PK), firstName, lastName, email, phone
+
+
+
+
+
