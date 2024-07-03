@@ -1,0 +1,62 @@
+
+{% extends "layout.html" %}
+
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Conference</title>
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <h1>Create a New Conference</h1>
+    <form method="post" action="{{ url_for('create_conference') }}">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.title.label }}<br>
+            {{ form.title(size=32) }}
+        </p>
+        <p>
+            {{ form.startDateTime.label }}<br>
+            {{ form.startDateTime(size=32) }}
+            {% for error in form.startDateTime.errors %}
+                <span style="color: red;">{{ error }}</span><br>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.endDateTime.label }}<br>
+            {{ form.endDateTime(size=32) }}
+            {% for error in form.endDateTime.errors %}
+                <span style="color: red;">{{ error }}</span><br>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.place.label }}<br>
+            {{ form.place(size=32) }}
+        </p>
+        <p>
+            {{ form.capacity.label }}<br>
+            {{ form.capacity(size=32) }}
+        </p>
+        <p>
+            {{ form.article_id.label }}<br>
+            {{ form.article_id() }}
+        </p>
+        <p><input type="submit" value="Create Conference"></p>
+    </form>
+</body>
+</html>
+
+{%endblock%}

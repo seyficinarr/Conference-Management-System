@@ -1,8 +1,23 @@
 {% extends "layout.html" %}
 
+{% block body %}
+<h1>Welcome, {{ user.firstName }} {{ user.lastName }}</h1>
+<p>User ID: {{ user.userId }}</p>
+<p>Role: {{ user.role }}</p>
 
-{% block body%}
-<p>Ana sayfa</p>
+{% if user.role == 'User' %}
+    <p>Number of conferences registered: {{ registered_conferences_count }}</p>
+{% endif %}
 
+{% if user.role == 'Author' %}
+    <p>Number of articles published: {{ published_articles_count }}</p>
+{% endif %}
 
+{% if user.role == 'Organizer' %}
+    <p>Number of conferences created: {{ created_conferences_count }}</p>
+{% endif %}
+
+<a href="{{ url_for('register') }}">Register</a>
+<p></p>
+<a href="{{ url_for('logout') }}">Logout</a>
 {% endblock %}

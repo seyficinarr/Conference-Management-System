@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="container">
+    <h2>Conferences</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Conference ID</th>
+                <th>Organizer ID</th>
+                <th>Paper Id</th>
+                <th>Title</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Place</th>
+                <th>Capacity</th>
+                <th>Remaining Capacity</th>
+                <th>Status</th>
+                <th>Action</th>  <!-- Add Action column header -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for conference in conferences %}
+            <tr>
+                <td>{{ conference.conferenceId }}</td>
+                <td>{{ conference.organizerId }}</td>
+                <td><a href="{{ url_for('article', article_id=conference.paperId) }}">{{ conference.paperId }}</a></td>
+                <td>{{ conference.title }}</td>
+                <td>{{ conference.startDateTime.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ conference.endDateTime.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ conference.place }}</td>
+                <td>{{ conference.capacity }}</td>
+                <td>{{ conference.remainingCapacity }}</td>
+                
+                {% if conference.endDateTime < now %}
+                    <td style="color: red;">Conference has been occured</td>
+                    <td></td>  <!-- No action button if conference is expired -->
+                {% else %}
+
+                    <td style="color: green;">Conference is on air</td>
+                    <td>
+                        <form action="{{ url_for('cancel_conference', conference_id=conference.conferenceId) }}" method="POST">
+                            <button type="submit" class="btn btn-danger">Cancel the Conference</button>
+                        </form>
+                    </td>
+                {% endif %}
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

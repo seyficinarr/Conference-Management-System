@@ -1,3 +1,35 @@
 {
-    "sqltools.connections": []
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "fose",
+            "database": "sakila",
+            "username": "root",
+            "password": "Aseyfo58"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "foseconnection",
+            "password": "Aseyfo58",
+            "database": "foseproject",
+            "username": "root"
+        }
+    ],
+    "dataworkspace.excludedProjects": [
+        "foseproject/foseproject.sqlproj"
+    ]
 }

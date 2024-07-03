@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="container">
+    <h2>{{ conference.title }}</h2>
+    <hr>
+    <p><strong>Organizer:</strong> {{ organizer.firstName ~ ' ' ~ organizer.lastName }}</p>
+    <p><strong>Author:</strong> {{ author.firstName ~ ' ' ~ author.lastName }}</p>
+    <p><strong>Start Date:</strong> {{ conference.startDateTime.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+    <p><strong>End Date:</strong> {{ conference.endDateTime.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+    <p><strong>Place:</strong> {{ conference.place}}</p>
+    <p><strong>Capacity:</strong> {{ conference.capacity}}</p>
+    <p><strong>Remaining Capacity:</strong> {{ conference.remainingCapacity }}</p>
+    <form action="{{ url_for('attend_conference', conference_id=conference.conferenceId) }}" method="POST">
+        <button type="submit" class="btn btn-primary">Attend Conference</button>
+    </form>
+    <hr>
+    
+</div>
+{% endblock %}

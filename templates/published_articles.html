@@ -2,7 +2,7 @@
 
 {% block body %}
 <div class="container">
-    <h2>Articles</h2>
+    <h2>Published Articles</h2>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -11,7 +11,7 @@
                 <th>Title</th>
                 <th>Created Date</th>
                 <th>Click to See the Full Content</th>
-                
+                <th>Delete the Article</th>
             </tr>
         </thead>
         <tbody>
@@ -24,7 +24,11 @@
                 <td>
                     <a href="{{ url_for('article', article_id=article.paperId) }}" class="btn btn-dark">Full Content</a>
                 </td>
-                
+                <td>
+                    <form action="{{ url_for('delete_article', article_id=article.paperId) }}" method="POST">
+                        <button type="submit" class="btn btn-danger">Delete the Article</button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
