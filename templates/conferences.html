@@ -2,6 +2,16 @@
 
 {% block body %}
 <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
     <h2>Conferences</h2>
     <table class="table table-striped">
         <thead>
@@ -15,13 +25,16 @@
                 <th>Place</th>
                 <th>Capacity</th>
                 <th>Remaining Capacity</th>
+                {% if user.role == 'User' %}
+                <th>Action</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
             {% for conference in conferences %}
             <tr>
                 <td>{{ conference.conferenceId }}</td>
-                <td>{{ conference.organizerId}}</td>
+                <td>{{ conference.organizerId }}</td>
                 <td><a href="{{ url_for('article', article_id=conference.paperId) }}">{{ conference.paperId }}</a></td>
                 <td>{{ conference.title }}</td>
                 <td>{{ conference.startDateTime.strftime('%Y-%m-%d %H:%M:%S') }}</td>
@@ -29,11 +42,13 @@
                 <td>{{ conference.place }}</td>
                 <td>{{ conference.capacity }}</td>
                 <td>{{ conference.remainingCapacity }}</td>
-                {%if user.role == 'Participant'%}
+                {% if user.role == 'User' %}
                 <td>
-                    <a href="{{ url_for('conference', conference_id=conference.conferenceId) }}" class="btn btn-dark">Click to Attend</a>
-                </td> 
-                {% endif %}           
+                    <form action="{{ url_for('attend_conference', conference_id=conference.conferenceId) }}" method="post">
+                        <button type="submit" class="btn btn-dark">Attend</button>
+                    </form>
+                </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>

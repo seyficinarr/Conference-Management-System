@@ -2,6 +2,15 @@
 
 {% block body %}
 <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     <h2>{{ article.title }}</h2>
     <p><strong>Author:</strong> {{ user.firstName ~ ' ' ~ user.lastName }}</p>
     <p><strong>Created Date:</strong> {{ article.dateTime.strftime('%Y-%m-%d %H:%M:%S') }}</p>

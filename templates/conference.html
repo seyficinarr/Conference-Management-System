@@ -2,6 +2,15 @@
 
 {% block body %}
 <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     <h2>{{ conference.title }}</h2>
     <hr>
     <p><strong>Organizer:</strong> {{ organizer.firstName ~ ' ' ~ organizer.lastName }}</p>

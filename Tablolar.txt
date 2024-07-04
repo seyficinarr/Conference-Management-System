@@ -1,10 +1,11 @@
 Conference:
-conferenceId(PK), paperId(FK), userId(FK)(organizer), title, description, startDate, endDate, location, venue
+conferenceId(PK), paperId(FK), userId(FK)(organizer), title, startDateTime, endDateTime, location, place, capacity, remainingCapacity
 User:
-userId(PK), firstName, lastName, email, phone, role
+userId(PK), firstName, lastName, email, phone, role, password
 Article:
 paperId(PK), authorId(FK), content, title, dateTime
-
+Participant:
+userId, conferenceId
 
 
 

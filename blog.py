@@ -221,6 +221,7 @@ class Participant(db.Model):
         PrimaryKeyConstraint('userId', 'conferenceId'),
     )
 
+
 # Route to attend the conference
 @app.route('/attend_conference/<int:conference_id>', methods=['POST'])
 def attend_conference(conference_id):
@@ -233,11 +234,11 @@ def attend_conference(conference_id):
 
     if conference.remainingCapacity <= 0:
         flash('This conference is full', 'danger')
-        return redirect(url_for('conference', conference_id=conference_id))
+        return redirect(url_for('display_conferences'))
     
     if Participant.query.get((user_id, conference_id)):
         flash('You are already registered to this conference.', 'danger')
-        return redirect(url_for('conference', conference_id=conference_id))
+        return redirect(url_for('display_conferences'))
     
     user_conference = Participant(userId=user_id, conferenceId=conference_id)
     db.session.add(user_conference)
@@ -245,7 +246,9 @@ def attend_conference(conference_id):
     db.session.commit()
     
     flash('You have successfully registered for the conference', 'success')
-    return redirect(url_for('conference', conference_id=conference_id))
+    return redirect(url_for('registered_conferences'))
+
+
 
 # Route to fetch conferences registered by the user
 @app.route("/registered_conferences")
@@ -297,7 +300,7 @@ def cancel_registration(conference_id):
     db.session.commit()
     
     flash('Your registration has been cancelled successfully', 'success')
-    return redirect(url_for('conference', conference_id=conference_id))
+    return redirect(url_for('registered_conferences', conference_id=conference_id))
 
 #Organizer
 
@@ -346,6 +349,14 @@ def create_conference():
             )
         ).first()
 
+        conflicting_titles = Conference.query.filter(Conference.title==title).first()
+
+        if conflicting_titles:
+            flash('The title of conference intersect with another conference.', 'danger')
+            return render_template('create_conference.html', form=form)
+
+
+        
         if conflicting_conferences:
             flash('The conference dates intersect with another conference at the same place.', 'danger')
             return render_template('create_conference.html', form=form)
@@ -368,7 +379,7 @@ def create_conference():
             db.session.commit()
             
             flash('Conference created successfully', 'success')
-            return redirect(url_for('display_conferences'))  # Redirect to conferences page
+            return redirect(url_for('created_conferences'))  # Redirect to conferences page
         except Exception as e:
             flash('Error creating conference', 'danger')
             print(f'Error: {str(e)}')

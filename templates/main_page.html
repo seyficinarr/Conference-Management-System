@@ -3,6 +3,8 @@
 {% block body %}
 <h1>Welcome, {{ user.firstName }} {{ user.lastName }}</h1>
 <p>User ID: {{ user.userId }}</p>
+<p>Mail Address: {{ user.email }}</p>
+<p>Phone Number: {{ user.phone }}</p>
 <p>Role: {{ user.role }}</p>
 
 {% if user.role == 'User' %}
